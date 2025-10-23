@@ -1,5 +1,3 @@
-Okay, I understand. Apologies for the previous attempts. Here is the plain text content of the README file, ready for you to copy directly:
-
 15-Days-15-Games-Day-12-Hexa-Havoc
 This is the twelfth game from my "15 Days 15 Games" challenge. It is a 3D top-down arena survival game featuring physics-based combat, a multi-state power-up system, progressive enemy waves, and boss encounters.
 
