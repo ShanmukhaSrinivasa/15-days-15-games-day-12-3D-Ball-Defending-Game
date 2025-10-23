@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRB;
+    private AudioSource playerAudio;
 
     [SerializeField] private float speed;
     [SerializeField] private GameObject focalPoint;
@@ -31,9 +32,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool smashing = false;
     [SerializeField] private float floorY;
 
+    [Header("SFX")]
+    public AudioClip hitFX;
+    public AudioClip powerUpFX;
+
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -41,9 +47,6 @@ public class PlayerController : MonoBehaviour
     {
         float forwardInput = Input.GetAxis("Vertical");
         playerRB.AddForce(focalPoint.transform.forward * forwardInput *  speed);
-        
-
-
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
 
         if (currentPowerUp == PowerUpType.Rockets && Input.GetKeyDown(KeyCode.F))
@@ -61,7 +64,7 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -10)
         {
             Destroy(gameObject);
-
+            GameManager.instance.GameOver();
         }
     }
 
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("PowerUP"))
         {
             hasPowerup = true;
+            playerAudio.PlayOneShot(powerUpFX, 1f);
             currentPowerUp = other.gameObject.GetComponent<PowerUp>().powerUpType;
             StartCoroutine(PowerupCountdownRoutine());
             powerupIndicator.gameObject.SetActive(true);
@@ -88,12 +92,17 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") && currentPowerUp == PowerUpType.Pushback)
         {
+            
             Rigidbody enemyRigidBody = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
 
             enemyRigidBody.AddForce(awayFromPlayer * powerUpStregth, ForceMode.Impulse);
 
             Debug.Log("Collided with " + collision.gameObject.name + " with the powerup set to " + currentPowerUp.ToString());
+        }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            playerAudio.PlayOneShot(hitFX, 1f);
         }
     }
 

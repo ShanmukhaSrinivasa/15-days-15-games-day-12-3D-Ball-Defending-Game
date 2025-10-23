@@ -15,12 +15,14 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0) return;
+
         enemyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
 
         if (enemyCount == 0)
@@ -30,14 +32,27 @@ public class SpawnManager : MonoBehaviour
             //Spawn a boss Every X Number of Waves
             if (waveNumber % bossRound == 0)
             {
-                SPawnBossWave(waveNumber);
+                SpawnBossWave(waveNumber);
+                GameManager.instance.bossWaveIndicator.alpha = 1;
+                GameManager.instance.waveNumberCount.alpha = 0;
+                GameManager.instance.waveNumberText.alpha = 0;
             }
             else
             {
                 SpawnEnemyWave(waveNumber);
+                GameManager.instance.waveNumberCount.alpha = 1;
+                GameManager.instance.waveNumberText.alpha = 1;
+                GameManager.instance.bossWaveIndicator.alpha = 0;
             }
             SpawnPowerUP();
         }
+
+        GameManager.instance.waveNumberCount.text = waveNumber.ToString();
+    }
+
+    public void BeginSpawning()
+    {
+        SpawnEnemyWave(waveNumber);
     }
 
     private void SpawnPowerUP()
@@ -64,7 +79,7 @@ public class SpawnManager : MonoBehaviour
         return spawnPos;
     }
 
-    private void SPawnBossWave(int currentRound)
+    private void SpawnBossWave(int currentRound)
     {
         int miniEnemiesToSpawn;
 
