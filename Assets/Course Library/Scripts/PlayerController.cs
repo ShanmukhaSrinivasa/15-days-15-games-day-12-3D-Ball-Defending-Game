@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         float forwardInput = Input.GetAxis("Vertical");
         playerRB.AddForce(focalPoint.transform.forward * forwardInput *  speed);
+        
 
 
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
@@ -53,6 +55,13 @@ public class PlayerController : MonoBehaviour
         {
             smashing = true;
             StartCoroutine(Smash());
+        }
+
+        //Destory Player and Show GameOver screen
+        if (transform.position.y < -10)
+        {
+            Destroy(gameObject);
+
         }
     }
 
@@ -141,5 +150,5 @@ public class PlayerController : MonoBehaviour
             //We are no longer smashing so set the boolean to false
             smashing = false;
         }
-    }
+    }    
 }
