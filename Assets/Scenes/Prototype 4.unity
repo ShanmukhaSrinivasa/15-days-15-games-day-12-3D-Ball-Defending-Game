@@ -288,8 +288,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca8c871b9d514e41bd1b4894158d758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabs: {fileID: 8823461662810529541, guid: b242bbaa62d6c1242ac6617bed3d12f7, type: 3}
-  powerupPrefab: {fileID: 1962842150942864846, guid: 86f4b7f7c5f1d114280abbe0e06d8175, type: 3}
+  enemyPrefabs:
+  - {fileID: 8823461662810529541, guid: b242bbaa62d6c1242ac6617bed3d12f7, type: 3}
+  - {fileID: 8823461662810529541, guid: 741c7b3a15dceb14dba8c837d1b6bc5f, type: 3}
+  powerupPrefabs:
+  - {fileID: 1962842150942864846, guid: 86f4b7f7c5f1d114280abbe0e06d8175, type: 3}
+  - {fileID: 8097616325911731792, guid: 67e1edabb993af74896da4ea51960eee, type: 3}
   spawnRange: 9
   enemyCount: 0
   waveNumber: 0
@@ -935,6 +939,8 @@ MonoBehaviour:
   focalPoint: {fileID: 903308477}
   powerUpStregth: 15
   powerupIndicator: {fileID: 1401912471}
+  currentPowerUp: 0
+  rocketPrefab: {fileID: 2527924525681748028, guid: da0cedc12f3ac364a9707d48df0d3bdf, type: 3}
 --- !u!1001 &7305732181041295649
 PrefabInstance:
   m_ObjectHideFlags: 0
